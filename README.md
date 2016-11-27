@@ -51,7 +51,7 @@ Upgrade packages<br>
 ` $ sudo apt-get upgrade `<br>
 
 4. Configure the local time to UTC:<br>
-(Resource: [Ask Ubuntu](http://askubuntu.com/questions/138423/how-do-i-change-my-timezone-to-utc-gmt)<br>
+(Resource: [Ask Ubuntu](http://askubuntu.com/questions/138423/how-do-i-change-my-timezone-to-utc-gmt))<br>
 ` $ sudo dpkg-reconfigure tzdata `<br>
 Select **Other** from the menu then select **UTC** and press enter.
 
@@ -65,7 +65,7 @@ Select **Other** from the menu then select **UTC** and press enter.
   - Restart SSH<br>
   ` $ sudo service ssh restart `<br>
 
-6. Create SSH Keys<br>
+6. Create SSH Keys:<br>
 (Resource: [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server))<br>
 On local machine generate a SSH key pair by typing:<br>
 ` $ ssh-keygen `<br>
@@ -82,4 +82,35 @@ Open the `authorized_keys` file and paste the public key<br>
 Change the permissions on the `.ssh` folder and `authorized_keys` file<br>
 ` $ chmod 700 .ssh `<br>
 ` $ chmod 644 .ssh/authorized_keys `<br>
-Disable
+Disable Password Authorization in SSH config file<br>
+` $ sudo nano /etc/ssh/sshd_config `<br>
+Restart SSH service<br>
+` $ sudo service ssh restart `<br>
+
+7. Configure Uncomplicated Firewall(UFW):<br>
+(Resource: [Udacity]())<br>
+Deny all incoming connections<br>
+` $ sudo ufw default deny incoming `<br>
+Allow all outgoing connections<br>
+` $ sudo ufw default allow outgoing `<br>
+Allow SSH on port 2200<br>
+` $ sudo ufw allow 2200/tcp `
+Allow HTTP<br>
+` $ sudo ufw allow 80/tcp `
+Allow NTP<br>
+` $ sudo ufw allow 123/udp `<br>
+Enable UFW<br>
+` $ sudo ufw enable `<br>
+
+8. Install Apache and mod_wsgi:<br>
+(Resource:[Udacity](https://classroom.udacity.com/nanodegrees/nd004/parts/00413454014/modules/357367901175461/lessons/4340119836/concepts/48189486140923#))<br>
+Install Apache and mod_wsgi<br>
+` $ sudo apt-get install apache2 libapache2-mod-wsgi python-setuptools `<br>
+Enable mod_wsgi<br>
+` $ sudo a2enmod wsgi `
+Restart Apache Service<br>
+` $ sudo service apache2 restart `<br>
+
+9. Install and setup PostgreSQL<br>
+
+
