@@ -13,9 +13,7 @@ We were given a baseline installation of a Ubuntu Linux distribution on a virtua
 ```
 
 ## Web Application URL
-```
-http://35.161.52.116 
-```
+[http://35.161.52.116](http://35.161.52.116)
 
 ## Create Development Environment
 (Resource: [Udacity](https://www.udacity.com/account#!/development_environment))
