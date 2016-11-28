@@ -227,9 +227,9 @@ Open config file<br>
 ` $ sudo nano /etc/apache2/sites-available/catalog.conf `<br>
 Add the following code<br>
 ` ServerAlias http://ec2-35-161-52-116.us-west-2.compute.amazonaws.com/ `<br>
-In the Google console add the site IP for the site with http:// appended in the JavaScript Authorization url list and the above server alias url for the redirect url<br>
+In the Google console add http://35.161.52.116 in the JavaScript Authorization url list and the above server alias url for the redirect url<br>
 Add the above urls in the ` client_secrets.json ` file<br>
-In the Facebook developer page add the IP address with http:// appended in the valid OAuth redirect URIs section<br>
+In the Facebook developer page add http://35.161.52.116 in the valid OAuth redirect URIs section<br>
 
 14. Setup initial database<br>
 Run the ` database_setup.py ` file<br>
