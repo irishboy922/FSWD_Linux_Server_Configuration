@@ -210,7 +210,7 @@ Restart Apache Service<br>
 	Restart Apache<br>
 	` $ sudo service apache2 restart `<br>
 
-11. Add project 3 files to linux server<br>
+11. Add Catalog project files to linux server<br>
 (Reference: [StackExchange](http://unix.stackexchange.com/questions/115560/use-scp-to-transfer-a-file-from-local-directory-x-to-remote-directory-y))<br>
 	Securly copy files from local machine to remote machine<br>
 	` $ scp -i ~/.ssh/id_rsa -P 2200 -r /path/to/project/folder grader@35.161.52.116:/var/www/catalog/catalog `<br>
