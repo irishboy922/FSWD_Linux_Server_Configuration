@@ -114,7 +114,7 @@ Restart Apache Service<br>
 9. Install and setup PostgreSQL<br>
 (Reference: [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps))<br>
 	Install PostgreSQL<br>
-	` $ sudo apt-get install postgresql postgresql-contrib `<br>
+	` $ sudo apt-get install postgresql postgresql-contrib python-psycopg2 python-sqlalchemy `<br>
 	**Confirm that Remote Connections are denied**<br>
 	Open PostgreSQL config file<br>
 	` $ sudo nano /etc/postgresql/9.1/main/pg_hba.conf `<br>
