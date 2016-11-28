@@ -113,114 +113,114 @@ Restart Apache Service<br>
 
 9. Install and setup PostgreSQL<br>
 (Reference: [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps))<br>
-Install PostgreSQL<br>
-` $ sudo apt-get install postgresql postgresql-contrib `<br>
-**Confirm that Remote Connections are denied**<br>
-Open PostgreSQL config file<br>
-` $ sudo nano /etc/postgresql/9.1/main/pg_hba.conf `<br>
-Make sure that the seetings are the same as below<br>
-```
-local   all             postgres                                peer
-local   all             all                                     peer
-host    all             all             127.0.0.1/32            md5
-host    all             all             ::1/128                 md5
-```
-Connect to database system<br>
-` $ psgl `<br>
-Create user **catalog** and give it the ability to create databases<br>
-(Reference: [PostgreSQL](https://www.postgresql.org/docs/8.0/static/sql-createuser.html))<br>
-` CREATE USER catalog WITH PASSWORD '<password>'; `<br>
-` ALTER USER catalog CREATEDB; `<br>
-Create a database named **catalog**<br>
-(Reference: [PostgreSQL](https://www.postgresql.org/docs/9.0/static/sql-createdatabase.html))<br>
-` CREATE DATABASE catalog WITH OWNER catalog; `<br>
-Lock down database so only **catalog** user can create tables<br>
-` REVOKE ALL ON SCHEMA public FROM public; `<br>
-` GRANT ALL ON SCHEMA public TO catalog; `<br>
-Exit database system<br>
-` \q `<br>
+	Install PostgreSQL<br>
+	` $ sudo apt-get install postgresql postgresql-contrib `<br>
+	**Confirm that Remote Connections are denied**<br>
+	Open PostgreSQL config file<br>
+	` $ sudo nano /etc/postgresql/9.1/main/pg_hba.conf `<br>
+	Make sure that the seetings are the same as below<br>
+	```
+	local   all             postgres                                peer
+	local   all             all                                     peer
+	host    all             all             127.0.0.1/32            md5
+	host    all             all             ::1/128                 md5
+	```
+	Connect to database system<br>
+	` $ psgl `<br>
+	Create user **catalog** and give it the ability to create databases<br>
+	(Reference: [PostgreSQL](https://www.postgresql.org/docs/8.0/static/sql-createuser.html))<br>
+	` CREATE USER catalog WITH PASSWORD '<password>'; `<br>
+	` ALTER USER catalog CREATEDB; `<br>
+	Create a database named **catalog**<br>
+	(Reference: [PostgreSQL](https://www.postgresql.org/docs/9.0/static/sql-createdatabase.html))<br>
+	` CREATE DATABASE catalog WITH OWNER catalog; `<br>
+	Lock down database so only **catalog** user can create tables<br>
+	` REVOKE ALL ON SCHEMA public FROM public; `<br>
+	` GRANT ALL ON SCHEMA public TO catalog; `<br>
+	Exit database system<br>
+	` \q `<br>
 
 10. Setup Server for Flask App<br>
 (Reference: [DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps))<br>
-Create initial project directory in `/var/www/` directory<br>
-` $ sudo mkdir catalog `<br>
-Move to new directory<br>
-` $ sudo cd catalog `<br>
-Create another directory<br>
-` $ sudo mkdir catalog `<br>
-Move to new directory<br>
-` $ sudo cd catalog `<br>
-Create a directory **static** and **templates**<br>
-` $ sudo mkdir static templates `<br>
-Install PIP<br>
-` $ sudo apt-get install python-pip `<br>
-If _virtualenv_ is not installed use PIP to install<br>
-` $ sudo pip install virtualenv `<br>
-Rename the temporary environment<br>
-` $ sudo virtualenv venv `<br>
-Activate virtual environment to install Flask and other project dependencies<br>
-` $ source venv/bin/activate `<br>
-Install Flask and other project dependencies<br>
-` $ sudo pip install Flask oauth2client httplib2 requests bleach `<br>
-Deactivate virtual environment<br>
-` $ sudo deactivate `<br>
-**Configure virtual host**<br>
-Open config file<br>
-` $ sudo nano /etc/apache2/sites-available/catalog.conf `<br>
-Add the following code<br>
-```
-<VirtualHost *:80>
-		ServerName 35.161.52.116.com
-		ServerAdmin admin@35.161.52.116.com
-		WSGIScriptAlias / /var/www/catalog/catalog.wsgi
-		<Directory /var/www/catalog/catalog/>
-			Order allow,deny
-			Allow from all
-		</Directory>
-		Alias /static /var/www/catalog/catalog/static
-		<Directory /var/www/catalog/catalog/static/>
-			Order allow,deny
-			Allow from all
-		</Directory>
-		ErrorLog ${APACHE_LOG_DIR}/error.log
-		LogLevel warn
-		CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-```
-Save file and exit<br>
-Enable virtual host<br>
-` $ sudo a2ensite FlaskApp `<br>
+	Create initial project directory in `/var/www/` directory<br>
+	` $ sudo mkdir catalog `<br>
+	Move to new directory<br>
+	` $ sudo cd catalog `<br>
+	Create another directory<br>
+	` $ sudo mkdir catalog `<br>
+	Move to new directory<br>
+	` $ sudo cd catalog `<br>
+	Create a directory **static** and **templates**<br>
+	` $ sudo mkdir static templates `<br>
+	Install PIP<br>
+	` $ sudo apt-get install python-pip `<br>
+	If _virtualenv_ is not installed use PIP to install<br>
+	` $ sudo pip install virtualenv `<br>
+	Rename the temporary environment<br>
+	` $ sudo virtualenv venv `<br>
+	Activate virtual environment to install Flask and other project dependencies<br>
+	` $ source venv/bin/activate `<br>
+	Install Flask and other project dependencies<br>
+	` $ sudo pip install Flask oauth2client httplib2 requests bleach `<br>
+	Deactivate virtual environment<br>
+	` $ sudo deactivate `<br>
+	**Configure virtual host**<br>
+	Open config file<br>
+	` $ sudo nano /etc/apache2/sites-available/catalog.conf `<br>
+	Add the following code<br>
+	```
+	<VirtualHost *:80>
+			ServerName 35.161.52.116.com
+			ServerAdmin admin@35.161.52.116.com
+			WSGIScriptAlias / /var/www/catalog/catalog.wsgi
+			<Directory /var/www/catalog/catalog/>
+				Order allow,deny
+				Allow from all
+			</Directory>
+			Alias /static /var/www/catalog/catalog/static
+			<Directory /var/www/catalog/catalog/static/>
+				Order allow,deny
+				Allow from all
+			</Directory>
+			ErrorLog ${APACHE_LOG_DIR}/error.log
+			LogLevel warn
+			CustomLog ${APACHE_LOG_DIR}/access.log combined
+	</VirtualHost>
+	```
+	Save file and exit<br>
+	Enable virtual host<br>
+	` $ sudo a2ensite FlaskApp `<br>
 
-**Create .wsgi file**<br>
-Move to project folder<br>
-` $ cd /var/www/catalog `<br>
-Create file<br>
-` $ sudo nano catalog.wsgi `<br>
-Add the following code and save<br>
-```
-#!/usr/bin/python
-import sys
-import logging
-logging.basicConfig(stream=sys.stderr)
-sys.path.insert(0,"/var/www/catalog/")
+	**Create .wsgi file**<br>
+	Move to project folder<br>
+	` $ cd /var/www/catalog `<br>
+	Create file<br>
+	` $ sudo nano catalog.wsgi `<br>
+	Add the following code and save<br>
+	```
+	#!/usr/bin/python
+	import sys
+	import logging
+	logging.basicConfig(stream=sys.stderr)
+	sys.path.insert(0,"/var/www/catalog/")
 
-from catalog import app as application
-application.secret_key = 'Add your secret key'
-```
-Restart Apache<br>
-` $ sudo service apache2 restart `<br>
+	from catalog import app as application
+	application.secret_key = 'Add your secret key'
+	```
+	Restart Apache<br>
+	` $ sudo service apache2 restart `<br>
 
 11. Add project 3 files to linux server<br>
 (Reference: [StackExchange](http://unix.stackexchange.com/questions/115560/use-scp-to-transfer-a-file-from-local-directory-x-to-remote-directory-y))<br>
-Securly copy files from local machine to remote machine<br>
-` $ scp -i ~/.ssh/id_rsa -P 2200 -r /path/to/project/folder grader@35.161.52.116:/var/www/catalog/catalog `<br>
-Reorganize folder and files as needed<br>
+	Securly copy files from local machine to remote machine<br>
+	` $ scp -i ~/.ssh/id_rsa -P 2200 -r /path/to/project/folder grader@35.161.52.116:/var/www/catalog/catalog `<br>
+	Reorganize folder and files as needed<br>
 
-12. Adjust project file code to allow application to run on new server<br>
-Rename ` project.py ` file to ` __init__py `<br>
-Correct the path for ` client_secrets.json ` and ` fb_client_secrets.json ` in ` __init__.py ` file<br>
-Change the ` create_engine ` code to reflect the use of PostgreSQL instead of SQLite in the ` database_setup.py `, ` initialRecipes.py `, ` __init__.py ` files<br>
-` engine = create_engine("postgresql://catalog:<db password>@localhost/catalog")`<br>
+	12. Adjust project file code to allow application to run on new server<br>
+	Rename ` project.py ` file to ` __init__py `<br>
+	Correct the path for ` client_secrets.json ` and ` fb_client_secrets.json ` in ` __init__.py ` file<br>
+	Change the ` create_engine ` code to reflect the use of PostgreSQL instead of SQLite in the ` database_setup.py `, ` initialRecipes.py `, ` __init__.py ` files<br>
+	` engine = create_engine("postgresql://catalog:<db password>@localhost/catalog")`<br>
 
 13. Adjust Google and Facebook OAuth logins working<br>
 **Add server alias to apache config file**<br>
